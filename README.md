@@ -1,4 +1,3 @@
-AjaxFileUploadForMVC
-====================
+This is an example of simple file upload for ASP.NET MVC. It uses jQuery and Ajax to upload file. 
 
-Ajax file upload with jQuery and Asp.Net MVC
+For read instructions go to this website http://www.behrankankul.com/ajax-file-upload-with-jquery-and-asp-net-mvc/
