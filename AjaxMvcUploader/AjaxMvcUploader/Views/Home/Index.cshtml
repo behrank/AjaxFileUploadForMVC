@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <title>Ajax MVC Uploader</title>
+    <style>
+        .upload-container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 125px;
+            height: 35px;
+            margin-top: 20%;
+            background-color: #ccc;
+            padding: 10px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+        }
+        #btn-upload {
+            width: 125px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border: none;
+            text-align: center;
+            background-color: rgb(113, 157, 163);
+            color: white;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            line-height: 100%;
+            cursor: pointer;
+        }
+
+        #file-uploader {
+            width: 0px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn-upload").on("click", function () {
+                $('#file-uploader').click();
+            });
+        });
+        $(function () {
+            $("#file-uploader").on("change", function () {
+                SubmitFile(); //This is our upload function.
+            });
+        });
+        function SubmitFile() {
+            var formData = new FormData(); //We need to create form. Beause we are sending a file here!
+            var file = document.getElementById("file-uploader").files[0]; //file
+
+            formData.append("file", file); //Added file to our form
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadFile","Home")', //Name of action and controller
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    //this event is unneccesary. You can use it for a loader. Triggers before sending data.
+                    $("#btn-upload").text("Uploading");
+                },
+                success: function () {
+                    //this event unneccesary too. I prefer to use it for showing a dialog to tell user "Hey, It's uploaded!"
+                    //Success doesnt mean file saved on server. It means only post succeed.
+                    $("#btn-upload").text('Hey, Its uploaded!');
+                }
+            });
+        }
+    </script>
+</head>
+    <body>
+        <div class="upload-container">
+            <button id="btn-upload">Send File</button>
+            <input type="file" id="file-uploader" />
+        </div>
+    </body>
+</html>
